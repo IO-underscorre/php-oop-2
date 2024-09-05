@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/data/database.php';
 
+$category_filtered = isset($_GET['category']) ? $_GET['category'] : false;
+$item_filtered = isset($_GET['item']) ? $_GET['item'] : false;
+
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +28,12 @@ require_once __DIR__ . '/data/database.php';
                 Filters
             </h2>
 
-            <form action="#">
+            <form action="index.php" method="GET">
                 <menu>
                     <li class="filter-group">
                         <span class="filter-name">Pet:</span>
-                        <select name="" id="" class="filter-option">
-                            <option value="" selected>Chose...</option>
+                        <select name="category" class="filter-option">
+                            <option value selected disabled>Chose...</option>
                             <?php foreach ($categories as $category) : ?>
                                 <option value="<?php echo $category->species ?>"><?php echo $category->species ?></option>
                             <?php endforeach ?>
@@ -39,8 +42,8 @@ require_once __DIR__ . '/data/database.php';
 
                     <li class="filter-group">
                         <span class="filter-name">Item:</span>
-                        <select name="" id="" class="filter-option">
-                            <option value="" selected>Chose...</option>
+                        <select name="item" class="filter-option">
+                            <option value selected disabled>Chose...</option>
                             <option value="Bed">Bed</option>
                             <option value="Food">Food</option>
                             <option value="Toy">Toy</option>
@@ -61,9 +64,11 @@ require_once __DIR__ . '/data/database.php';
 
             <ul class="products-list">
                 <?php foreach ($products as $product) : ?>
-                    <li>
-                        <?php require __DIR__ . '/partials/card.php'; ?>
-                    </li>
+                    <?php if (($category_filtered == $product->category->species || $category_filtered === false) and ($item_filtered == get_class($product) || $item_filtered === false)) : ?>
+                        <li>
+                            <?php require __DIR__ . '/partials/card.php'; ?>
+                        </li>
+                    <?php endif; ?>
                 <?php endforeach ?>
             </ul>
         </section>

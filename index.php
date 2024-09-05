@@ -51,8 +51,8 @@ $item_filtered = isset($_GET['item']) ? $_GET['item'] : false;
                     </li>
 
                     <li class="filter-group">
-                        <button value="submit">Reset all filters</button>
-                        <button value="submit">Filter the search</button>
+                        <button type="reset">Reset all filters</button>
+                        <button type="submit">Filter the search</button>
                     </li>
             </form>
         </section>
